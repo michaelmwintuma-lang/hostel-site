@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
@@ -16,12 +16,15 @@ export const metadata: Metadata = {
   title: "XTRACITY HOSTELS AND APARTMENTS LTD - Luxury Student Residence",
   description: "Experience premium student living in Ghana. High-speed Wi-Fi, 24/7 security, backup power, and a clean, safe environment.",
   manifest: "/manifest.json",
-  themeColor: "#E03B0D",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "Xtracity",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#E03B0D",
 };
 
 export default function RootLayout({
