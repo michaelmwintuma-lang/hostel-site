@@ -17,7 +17,10 @@ export async function getAuthSession() {
   try {
     const session = await auth();
     return { userId: session.userId };
-  } catch (e) {
+  } catch (e: any) {
+    if (e?.digest === 'DYNAMIC_SERVER_USAGE' || e?.digest?.startsWith('NEXT_')) {
+      throw e;
+    }
     console.warn('Clerk auth() failed:', e);
     return { userId: null };
   }
@@ -36,7 +39,10 @@ export async function getAuthUser(): Promise<MockUser | null> {
       };
     }
     return null;
-  } catch (e) {
+  } catch (e: any) {
+    if (e?.digest === 'DYNAMIC_SERVER_USAGE' || e?.digest?.startsWith('NEXT_')) {
+      throw e;
+    }
     console.warn('Clerk currentUser() failed:', e);
     return null;
   }
