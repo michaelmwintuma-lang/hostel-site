@@ -107,8 +107,8 @@ export default async function RoomsPage() {
               </div>
             )}
 
-            <CardHeader className="space-y-2 p-6 md:p-8">
-              <CardTitle className="text-lg md:text-xl font-bold text-slate-900 dark:text-white flex items-center justify-between">
+            <CardHeader className="space-y-2 p-6 md:p-8 text-center mt-2">
+              <CardTitle className="text-lg md:text-xl font-bold text-slate-900 dark:text-white flex items-center justify-center">
                 {type.name}
               </CardTitle>
               <CardDescription className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
@@ -116,9 +116,9 @@ export default async function RoomsPage() {
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="px-6 md:px-8 pb-6 space-y-6 flex-grow">
+            <CardContent className="px-6 md:px-8 pb-6 space-y-6 flex-grow flex flex-col items-center">
               {/* Pricing */}
-              <div className="space-y-1 border-y border-slate-100 dark:border-slate-700 py-4">
+              <div className="space-y-1 border-y border-slate-100 dark:border-slate-700 py-4 w-full text-center">
                 <div className="text-3xl font-extrabold text-[#E03B0D]">
                   {(type.price_per_sem || type.price || 0).toLocaleString()} GHS
                 </div>
@@ -128,21 +128,21 @@ export default async function RoomsPage() {
               </div>
 
               {/* Specs & Capacity */}
-              <div className="flex items-center space-x-4 text-xs text-slate-700 dark:text-slate-300">
-                <div className="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+              <div className="flex flex-col items-center space-y-3 text-xs text-slate-700 dark:text-slate-300 w-full pt-2">
+                <div className="flex items-center justify-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-md w-full max-w-[200px]">
                   <Users className="h-3.5 w-3.5 text-[#E03B0D]" />
                   <span>Max {type.capacity} Student{type.capacity > 1 ? 's' : ''}</span>
                 </div>
-                <div className="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                <div className="flex items-center justify-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-md w-full max-w-[200px]">
                   <Flame className="h-3.5 w-3.5 text-[#E03B0D]" />
                   <span>AC Equipped</span>
                 </div>
               </div>
 
               {/* Amenities List */}
-              <div className="space-y-3">
+              <div className="space-y-3 w-full text-center pt-2">
                 <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Included Features</h4>
-                <ul className="grid grid-cols-1 gap-2.5">
+                <ul className="flex flex-col items-center gap-2.5">
                   {type.amenities.map((amenity, idx) => (
                     <li key={idx} className="flex items-center space-x-2 text-xs text-slate-700 dark:text-slate-300">
                       <Check className="h-4 w-4 text-[#E03B0D] shrink-0" />
@@ -153,14 +153,10 @@ export default async function RoomsPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="px-6 md:px-8 pb-8 pt-0">
+            <CardFooter className="px-6 md:px-8 py-6">
               <Link
                 href={`/booking?roomType=${type.id}`}
-                className={`group/btn w-full text-center flex items-center justify-center space-x-2 font-bold rounded-full py-3.5 transition-all duration-200 text-xs cursor-pointer ${
-                  type.popular
-                    ? 'bg-[#E03B0D] text-white hover:bg-[#A12808] hover:shadow-lg hover:shadow-[#E03B0D]/25'
-                    : 'border border-slate-200 dark:border-slate-600 text-slate-800 dark:text-slate-200 hover:bg-[#E03B0D]/5 dark:hover:bg-emerald-500/10 hover:border-[#E03B0D]/40 dark:hover:border-emerald-500/40'
-                }`}
+                className="group/btn w-full text-center flex items-center justify-center space-x-2 font-bold rounded-full py-3.5 transition-all duration-200 text-xs cursor-pointer bg-[#E03B0D] text-white hover:bg-[#A12808] hover:shadow-lg hover:shadow-[#E03B0D]/25"
               >
                 <span>Select &amp; Book Room</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1" />

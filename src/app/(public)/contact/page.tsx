@@ -133,7 +133,7 @@ export default function ContactPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white text-xs md:text-sm">Location Address</h4>
                 <p className="text-slate-600 dark:text-slate-400 text-xs mt-1 leading-relaxed">
                   Cosway Down, Agbogba<br />
-                  P.O.BOX WY 2630, Dome-Kwabenya, Accra, Ghana.
+                  P.O.Box WY 2630, Dome-Kwabenya, Accra, Ghana.
                 </p>
               </div>
             </div>

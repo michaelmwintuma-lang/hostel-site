@@ -89,8 +89,8 @@ export default function Header({ isUserSignedIn, isClerkConfigured }: HeaderProp
                   key={link.href}
                   href={link.href}
                   className={`transition-all pb-1 border-b-2 ${isActive
-                      ? 'text-[#E03B0D] dark:text-emerald-400 border-[#E03B0D] dark:border-emerald-400'
-                      : 'border-transparent hover:text-[#E03B0D] dark:hover:text-emerald-400 hover:border-[#E03B0D]/30 dark:hover:border-emerald-400/30'
+                    ? 'text-[#E03B0D] dark:text-emerald-400 border-[#E03B0D] dark:border-emerald-400'
+                    : 'border-transparent hover:text-[#E03B0D] dark:hover:text-emerald-400 hover:border-[#E03B0D]/30 dark:hover:border-emerald-400/30'
                     }`}
                 >
                   {link.label}
@@ -147,8 +147,8 @@ export default function Header({ isUserSignedIn, isClerkConfigured }: HeaderProp
                   href={link.href}
                   onClick={closeMenu}
                   className={`text-sm font-semibold transition-colors py-3 border-b border-slate-100 dark:border-slate-800 last:border-0 ${isActive
-                      ? 'text-[#E03B0D] dark:text-emerald-400 pl-3 border-l-4 border-l-[#E03B0D] dark:border-l-emerald-400 bg-[#E03B0D]/5 dark:bg-emerald-400/5'
-                      : 'text-slate-700 dark:text-slate-200 pl-4 hover:text-[#E03B0D] dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                    ? 'text-[#E03B0D] dark:text-emerald-400 pl-3 border-l-4 border-l-[#E03B0D] dark:border-l-emerald-400 bg-[#E03B0D]/5 dark:bg-emerald-400/5'
+                    : 'text-slate-700 dark:text-slate-200 pl-4 hover:text-[#E03B0D] dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                     }`}
                 >
                   {link.label}
