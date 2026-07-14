@@ -1,0 +1,321 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(0.99 0.005 250);
+  --foreground: oklch(0.2 0.02 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 250);
+  --primary: oklch(0.2 0.02 250);
+  --primary-foreground: oklch(0.98 0.005 250);
+  --secondary: oklch(0.95 0.01 250);
+  --secondary-foreground: oklch(0.2 0.02 250);
+  --muted: oklch(0.95 0.01 250);
+  --muted-foreground: oklch(0.55 0.02 250);
+  --accent: oklch(0.95 0.01 250);
+  --accent-foreground: oklch(0.2 0.02 250);
+  --destructive: oklch(0.6 0.15 20);
+  --border: oklch(0.92 0.01 250);
+  --input: oklch(0.92 0.01 250);
+  --ring: oklch(0.8 0.02 250);
+  --chart-1: oklch(0.6 0.15 250);
+  --chart-2: oklch(0.55 0.12 200);
+  --chart-3: oklch(0.5 0.1 150);
+  --chart-4: oklch(0.6 0.15 300);
+  --chart-5: oklch(0.7 0.15 40);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.98 0.005 250);
+  --sidebar-foreground: oklch(0.2 0.02 250);
+  --sidebar-primary: oklch(0.2 0.02 250);
+  --sidebar-primary-foreground: oklch(0.98 0.005 250);
+  --sidebar-accent: oklch(0.95 0.01 250);
+  --sidebar-accent-foreground: oklch(0.2 0.02 250);
+  --sidebar-border: oklch(0.92 0.01 250);
+  --sidebar-ring: oklch(0.8 0.02 250);
+}
+
+.dark {
+  --background: oklch(0.15 0.015 250);
+  --foreground: oklch(0.98 0.005 250);
+  --card: oklch(0.18 0.015 250);
+  --card-foreground: oklch(0.98 0.005 250);
+  --popover: oklch(0.18 0.015 250);
+  --popover-foreground: oklch(0.98 0.005 250);
+  --primary: oklch(0.95 0.01 250);
+  --primary-foreground: oklch(0.15 0.015 250);
+  --secondary: oklch(0.22 0.015 250);
+  --secondary-foreground: oklch(0.98 0.005 250);
+  --muted: oklch(0.22 0.015 250);
+  --muted-foreground: oklch(0.7 0.015 250);
+  --accent: oklch(0.22 0.015 250);
+  --accent-foreground: oklch(0.98 0.005 250);
+  --destructive: oklch(0.4 0.15 20);
+  --border: oklch(0.25 0.015 250);
+  --input: oklch(0.25 0.015 250);
+  --ring: oklch(0.3 0.015 250);
+  --chart-1: oklch(0.6 0.15 250);
+  --chart-2: oklch(0.55 0.12 200);
+  --chart-3: oklch(0.5 0.1 150);
+  --chart-4: oklch(0.6 0.15 300);
+  --chart-5: oklch(0.7 0.15 40);
+  --sidebar: oklch(0.15 0.015 250);
+  --sidebar-foreground: oklch(0.98 0.005 250);
+  --sidebar-primary: oklch(0.95 0.01 250);
+  --sidebar-primary-foreground: oklch(0.15 0.015 250);
+  --sidebar-accent: oklch(0.22 0.015 250);
+  --sidebar-accent-foreground: oklch(0.98 0.005 250);
+  --sidebar-border: oklch(0.25 0.015 250);
+  --sidebar-ring: oklch(0.3 0.015 250);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   XTRACITY — Global Hover & Smooth Effect System
+   ═══════════════════════════════════════════════ */
+
+/* ── 1. Universal Transition Baseline ── */
+*, *::before, *::after {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a, button, [role="button"] {
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s,
+              box-shadow 0.25s, opacity 0.2s, transform 0.2s;
+}
+
+/* ── 2. Card Hover — lift + soft green glow ── */
+@keyframes xtr-card-glow {
+  from { box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  to   { box-shadow: 0 8px 32px rgba(224, 59, 13,0.12), 0 2px 8px rgba(224, 59, 13,0.08); }
+}
+
+.group:hover,
+[class*="rounded-2xl"]:hover,
+[class*="rounded-xl"]:hover {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s;
+}
+
+/* Cards that should lift on hover */
+article,
+[class*="rounded-2xl"].border,
+[class*="rounded-xl"].border {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+}
+
+article:hover,
+[class*="rounded-2xl"].border:hover,
+[class*="rounded-xl"].border:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(224, 59, 13, 0.10), 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Scroll-driven animations removed for clean, professional appearance */
+
+/* ── 4. Button press micro-interaction ── */
+button:active,
+[role="button"]:active,
+a[class*="rounded-full"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* ── 5. Nav link hover — slide-up underline ── */
+nav a {
+  position: relative;
+  text-decoration: none;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #E03B0D;
+  border-radius: 2px;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ── 6. Icon hover animations ── */
+/* Spin on hover — for settings/cog icons */
+[data-icon-spin]:hover svg,
+button:hover [data-icon="settings"] {
+  animation: xtr-spin 0.6s ease-in-out;
+}
+
+@keyframes xtr-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+
+/* Bounce on hover — for amenity icon wrappers */
+@keyframes xtr-bounce-in {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1.05); }
+}
+
+.group:hover .rounded-2xl svg,
+.group:hover .rounded-xl svg {
+  animation: xtr-bounce-in 0.35s ease forwards;
+}
+
+/* ── 7. Input field focus glow ── */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(224, 59, 13, 0.15);
+  border-color: #E03B0D !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ── 8. Image hover zoom (team cards, room cards) ── */
+img {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Section stagger animation removed — content now loads instantly on slow connections */
+
+/* ── 10. Shimmer / pulse for loading states ── */
+@keyframes xtr-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.xtr-shimmer {
+  background: linear-gradient(90deg,
+    #f0f9f4 25%,
+    #d1fae5 50%,
+    #f0f9f4 75%
+  );
+  background-size: 200% 100%;
+  animation: xtr-shimmer 1.6s infinite linear;
+}
+
+/* ── 11. Badge / pill hover pop ── */
+[class*="Badge"],
+[class*="badge"],
+span[class*="rounded-full"],
+span[class*="rounded-md"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[class*="Badge"]:hover,
+span[class*="rounded-full"]:hover {
+  transform: scale(1.06);
+  box-shadow: 0 2px 8px rgba(224, 59, 13, 0.15);
+}
+
+/* ── 12. Sidebar nav active-state indicator glow ── */
+aside nav a:hover {
+  background: rgba(224, 59, 13, 0.08);
+  color: #E03B0D;
+  transform: translateX(3px);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Prevent the underline pseudo-element inside the sidebar (it has its own bg) */
+aside nav a::after {
+  display: none;
+}
+
+/* ── 13. Hero CTA button — clean hover state ── */
+a[class*="bg-\[#E03B0D\]"]:hover,
+button[class*="bg-\[#E03B0D\]"]:hover {
+  box-shadow: 0 4px 16px rgba(224, 59, 13, 0.22);
+}
+
+/* ── 14. Smooth scrollbar styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E03B0D;
+  border-radius: 99px;
+  opacity: 0.7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A12808;
+}
+
+/* ── 15. Selection highlight ── */
+::selection {
+  background: rgba(224, 59, 13, 0.18);
+  color: #E03B0D;
+}
