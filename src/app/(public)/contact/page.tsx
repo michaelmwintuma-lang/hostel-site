@@ -146,8 +146,8 @@ export default function ContactPage() {
                 <h4 className="font-bold text-slate-900 dark:text-white text-xs md:text-sm">Phone Contacts</h4>
                 <p className="text-slate-600 dark:text-slate-400 text-xs mt-1 leading-relaxed">
                   Manager: Mr. Paah Kwesi — +233 244526110 <br />
-                   Assistant Manager: Mr. George Yeboah — +233 531211028 <br />
-                  Assistant Manager: Mr. Bismark Amponsah — +233 207183019
+                  Asst. Manager: Mr. George Yeboah — +233 531211028 <br />
+                  Asst. Manager: Mr. Bismark Amponsah — +233 207183019
                 </p>
               </div>
             </div>
