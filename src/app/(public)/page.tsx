@@ -111,7 +111,7 @@ const AMENITIES = [
   },
   {
     icon: ShuttleIcon,
-    title: "Daily Campus Shuttle",
+    title: "Shuttle Van",
     description: "Hourly private shuttles transporting students directly to Academic City University and nearby campuses."
   },
   {
@@ -165,7 +165,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
-                Experience a premium student residence offering 5-star comfort, high-speed connectivity, and uninterrupted backup utilities in Agbogba, just minutes from <span className="font-extrabold text-[#E03B0D] dark:text-emerald-400 underline decoration-2 underline-offset-4">Academic City University</span>.
+                Experience a premium student residence offering 5-star comfort, high-speed connectivity, and uninterrupted backup utilities in Agbogba, just minutes from <span className="font-extrabold text-[#E03B0D] dark:text-emerald-400 underline decoration-2 underline-offset-4">Academic City University, Wisconsin University, and University of Ghana</span>.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full pt-4">
@@ -223,7 +223,7 @@ export default function HomePage() {
             {/* Stat 1 */}
             <div className="flex flex-col items-center justify-center py-6 md:py-0 md:px-20 text-center w-full md:w-auto">
               <span className="text-5xl md:text-7xl font-black text-white mb-2 tracking-tight">
-                <AnimatedCounter end={150} suffix="+" duration={2000} />
+                <AnimatedCounter end={80} suffix="+" duration={2000} />
               </span>
               <span className="text-sm font-medium text-white/90 tracking-wide uppercase">Students</span>
             </div>
@@ -289,7 +289,7 @@ export default function HomePage() {
             {
               icon: SmileyIcon,
               label: "Student Satisfaction",
-              desc: "98% positive experience rating from over 150+ past students who completed their degrees with us.",
+              desc: "98% positive experience rating from over 80+ past students who completed their degrees with us.",
               num: "02"
             },
             {
@@ -336,35 +336,53 @@ export default function HomePage() {
               We manage premium student housing with a focus on safety, convenience, and community. Rest assured that utilities are always on, help is always present, and campus is never too far away.
             </p>
 
-            <ul className="space-y-3.5 text-xs text-slate-700 dark:text-slate-300">
-              <li className="flex items-center space-x-3">
-                <CheckCircle2 className="h-4.5 w-4.5 text-[#E03B0D] shrink-0" />
-                <span>98% Student Occupancy Rate Year-Over-Year</span>
+            <ul className="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+              <li className="flex items-start space-x-3">
+                <CheckCircle2 className="h-5 w-5 text-[#E03B0D] shrink-0 mt-0.5" />
+                <span className="leading-relaxed">98% Student Occupancy Rate Year-Over-Year</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <CheckCircle2 className="h-4.5 w-4.5 text-[#E03B0D] shrink-0" />
-                <span>On-site Maintenance Team available 24/7</span>
+              <li className="flex items-start space-x-3">
+                <CheckCircle2 className="h-5 w-5 text-[#E03B0D] shrink-0 mt-0.5" />
+                <span className="leading-relaxed">On-site Maintenance Team available 24/7</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <CheckCircle2 className="h-4.5 w-4.5 text-[#E03B0D] shrink-0" />
-                <span>Secured Booking with Direct Booking Confirmation</span>
+              <li className="flex items-start space-x-3">
+                <CheckCircle2 className="h-5 w-5 text-[#E03B0D] shrink-0 mt-0.5" />
+                <span className="leading-relaxed">Secured Booking with Direct Booking Confirmation</span>
               </li>
             </ul>
           </div>
 
-          {/* Testimonial Box */}
-          <div className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 rounded-2xl space-y-6 relative overflow-hidden shadow-sm">
-            <div className="absolute top-0 right-0 w-[120px] h-[120px] bg-[#E03B0D]/5 rounded-full blur-[30px]" />
-            <p className="text-slate-700 dark:text-slate-300 text-sm italic relative leading-relaxed">
-              "Living at Xtracity Hostel has been the highlight of my university years in Ghana. Having reliable high-speed internet and no power outages during exams made all the difference in my grades. Plus, the shuttle makes UGC trips completely stress-free!"
-            </p>
-            <div className="flex items-center space-x-4 border-t border-slate-100 dark:border-slate-700 pt-6">
-              <div className="h-10 w-10 rounded-full bg-[#E03B0D]/10 flex items-center justify-center font-bold text-[#E03B0D] text-xs">
-                KM
+          {/* Testimonial Boxes */}
+          <div className="space-y-6">
+            <div className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 rounded-2xl space-y-6 relative overflow-hidden shadow-sm">
+              <div className="absolute top-0 right-0 w-[120px] h-[120px] bg-[#E03B0D]/5 rounded-full blur-[30px]" />
+              <p className="text-slate-700 dark:text-slate-300 text-sm italic relative leading-relaxed">
+                "Living at Xtracity Hostel has provided the perfect environment during my residency. Having reliable high-speed internet and no power outages after long working hours makes all the difference. Plus, the shuttle service makes commuting completely stress-free!"
+              </p>
+              <div className="flex items-center space-x-4 border-t border-slate-100 dark:border-slate-700 pt-6">
+                <div className="h-10 w-10 rounded-full bg-[#E03B0D]/10 flex items-center justify-center font-bold text-[#E03B0D] text-xs">
+                  DA
+                </div>
+                <div>
+                  <h4 className="font-semibold text-xs text-slate-900 dark:text-white">Dr. Afiba</h4>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">Contact: 0596037127</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-xs text-slate-900 dark:text-white">Kwame Mensah</h4>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400">UG Law Student, Level 400</p>
+            </div>
+            
+            <div className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 rounded-2xl space-y-6 relative overflow-hidden shadow-sm">
+              <div className="absolute top-0 right-0 w-[120px] h-[120px] bg-[#E03B0D]/5 rounded-full blur-[30px]" />
+              <p className="text-slate-700 dark:text-slate-300 text-sm italic relative leading-relaxed">
+                "The environment is very conducive for learning and the facilities are top-notch. I highly recommend Xtracity to any student looking for comfort and peace of mind."
+              </p>
+              <div className="flex items-center space-x-4 border-t border-slate-100 dark:border-slate-700 pt-6">
+                <div className="h-10 w-10 rounded-full bg-[#E03B0D]/10 flex items-center justify-center font-bold text-[#E03B0D] text-xs">
+                  MM
+                </div>
+                <div>
+                  <h4 className="font-semibold text-xs text-slate-900 dark:text-white">Michael Mwintuma</h4>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">Academic City University | Contact: 0592566487</p>
+                </div>
               </div>
             </div>
           </div>

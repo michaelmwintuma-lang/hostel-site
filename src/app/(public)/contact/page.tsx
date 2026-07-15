@@ -46,6 +46,10 @@ const FAQS = [
     answer: "Yes. For 2-in-a-room and 3-in-a-room suites, during the onboarding profile setup, you can indicate roommate preferences (such as university, level, study habits) and we'll match you accordingly."
   },
   {
+    question: "What payment methods do you accept?",
+    answer: "We accept Momo Transfers, Bank Transfers, and Cash."
+  },
+  {
     question: "Can I pay in installments?",
     answer: "Yes, you can coordinate payment installments directly with the Xtracity administration team after your online application is submitted and confirmed."
   },
@@ -145,7 +149,7 @@ export default function ContactPage() {
               <div>
                 <h4 className="font-bold text-slate-900 dark:text-white text-xs md:text-sm">Phone Contacts</h4>
                 <p className="text-slate-600 dark:text-slate-400 text-xs mt-1 leading-relaxed">
-                  Manager: Mr. Paah Kwesi — +233 244526110 <br />
+                  General Manager: Mr. Paah Kwesi — +233 244526110 <br />
                   Asst. Manager: Mr. George Yeboah — +233 531211028 <br />
                   Asst. Manager: Mr. Bismark Amponsah — +233 207183019
                 </p>

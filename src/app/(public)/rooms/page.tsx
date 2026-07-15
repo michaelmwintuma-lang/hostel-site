@@ -142,7 +142,7 @@ export default async function RoomsPage() {
               {/* Amenities List */}
               <div className="space-y-3 w-full text-center pt-2">
                 <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Included Features</h4>
-                <ul className="flex flex-col items-center gap-2.5">
+                <ul className="flex flex-col items-start gap-2.5 w-fit mx-auto text-left">
                   {type.amenities.map((amenity, idx) => (
                     <li key={idx} className="flex items-center space-x-2 text-xs text-slate-700 dark:text-slate-300">
                       <Check className="h-4 w-4 text-[#E03B0D] shrink-0" />

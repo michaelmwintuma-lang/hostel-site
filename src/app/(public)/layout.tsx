@@ -83,7 +83,7 @@ export default async function PublicLayout({
             <h4 className="font-semibold text-xs uppercase tracking-widest text-white mb-4">Contact Info</h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li className="flex items-start gap-2"><LocationIcon /> <span>Cosway St, Agbogba, Near Academic City University, Accra</span></li>
-              <li className="flex items-start gap-2"><PhoneIcon /> <span>Manager: +233 244526110</span></li>
+              <li className="flex items-start gap-2"><PhoneIcon /> <span>General Manager: +233 244526110</span></li>
               <li className="flex items-start gap-2"><MailIcon /> <span>xtracityhostels@gmail.com</span></li>
             </ul>
           </div>
