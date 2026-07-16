@@ -45,7 +45,8 @@ export default async function AdminLayout({
 
   // Signed in but not admin → show access denied
   const userRole = user?.publicMetadata?.role || '';
-  const isAdmin = userRole === 'admin';
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress || '';
+  const isAdmin = userRole === 'admin' || userEmail === 'xtracityhostels@gmail.com';
 
   if (!isAdmin) {
     return (
@@ -74,9 +75,17 @@ export default async function AdminLayout({
   }
 
   // ── Shared sidebar layout shell (used in both demo and Clerk-authenticated modes) ──
+  let firstName = user?.firstName;
+  let lastName = user?.lastName;
+
+  if (userEmail === 'xtracityhostels@gmail.com') {
+    firstName = 'Mr. Bismark';
+    lastName = 'Ofosu';
+  }
+
   const shell = (content: React.ReactNode) => (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row text-slate-800">
-      <AdminSidebar userFirstName={user?.firstName} userLastName={user?.lastName} />
+      <AdminSidebar userFirstName={firstName} userLastName={lastName} />
 
       {/* 2. Main content viewport */}
       <main className="flex-grow p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full space-y-10">
