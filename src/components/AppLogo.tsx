@@ -21,7 +21,7 @@ export default function AppLogo({
         alt={alt}
         width={width}
         height={height}
-        className="w-full h-full object-contain transform scale-[1.05] translate-y-[-2%]"
+        className="w-full h-full object-contain transform scale-[1.03] translate-y-[2%]"
         priority
         placeholder="blur"
         style={{ clipPath: 'inset(0 0 10% 0)' }}
