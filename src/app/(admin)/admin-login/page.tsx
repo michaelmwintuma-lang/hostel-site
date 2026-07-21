@@ -47,8 +47,12 @@ export default function AdminLoginPage() {
               style={{ boxShadow: '0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
               <div className="relative mx-auto w-fit">
                 <div className="absolute inset-0 bg-emerald-400/20 blur-xl rounded-full" />
-                <div className="relative bg-white/10 border border-white/20 rounded-2xl p-3">
+                <div className="relative bg-white/10 border border-white/20 rounded-2xl p-3 flex items-center justify-center space-x-3">
                   <AppLogo alt="Admin Portal" width={110} height={36} className="h-9 w-auto object-contain" />
+                  <div className="flex flex-col text-left">
+                    <span className="font-extrabold text-sm text-white leading-tight">XTRACITY</span>
+                    <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">Executives</span>
+                  </div>
                 </div>
               </div>
 
@@ -91,8 +95,12 @@ export default function AdminLoginPage() {
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
             <div className="absolute inset-0 bg-emerald-400/20 blur-xl rounded-full" />
-            <div className="relative bg-white/10 border border-white/20 rounded-2xl p-3">
+            <div className="relative bg-white/10 border border-white/20 rounded-2xl p-3 flex items-center justify-center space-x-3">
               <AppLogo alt="Admin Portal" width={110} height={36} className="h-9 w-auto object-contain" />
+              <div className="flex flex-col text-left">
+                <span className="font-extrabold text-sm text-white leading-tight">XTRACITY</span>
+                <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">Executives</span>
+              </div>
             </div>
           </div>
           <div className="text-center">

@@ -15,14 +15,17 @@ export default function AppLogo({
   height = 40,
 }: AppLogoProps) {
   return (
-    <Image
-      src={logoImage}
-      alt={alt}
-      width={width}
-      height={height}
-      className={className}
-      priority
-      placeholder="blur"
-    />
+    <div className={`flex items-center overflow-hidden rounded-md shadow-sm bg-white ${className?.replace('rounded-md shadow-sm', '')}`}>
+      <Image
+        src={logoImage}
+        alt={alt}
+        width={width}
+        height={height}
+        className="w-full h-full object-contain transform scale-[1.05] translate-y-[-2%]"
+        priority
+        placeholder="blur"
+        style={{ clipPath: 'inset(0 0 10% 0)' }}
+      />
+    </div>
   );
 }

@@ -19,7 +19,7 @@ interface StaffUser {
 
 export default function SystemSettingsPage() {
   const [successMsg, setSuccessMsg] = useState('');
-  
+
   // Website Content states
   const [contactEmail, setContactEmail] = useState('xtracityhostels@gmail.com');
   const [contactPhone, setContactPhone] = useState('+233 (0) 50 123 4567');
@@ -181,7 +181,7 @@ export default function SystemSettingsPage() {
         {/* Tab 2: Staff Roles Access Control */}
         <TabsContent value="staff" className="space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* List of current staff */}
             <Card className="lg:col-span-2 border-slate-200 bg-white text-slate-800 shadow-sm">
               <CardHeader className="p-6 border-b border-slate-100">
@@ -217,9 +217,9 @@ export default function SystemSettingsPage() {
                             </Badge>
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <Button 
-                              variant="ghost" 
-                              onClick={() => handleDeleteStaff(person.id)} 
+                            <Button
+                              variant="ghost"
+                              onClick={() => handleDeleteStaff(person.id)}
                               className="h-8 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full px-3 text-[10px] font-bold cursor-pointer"
                             >
                               <Trash className="h-3.5 w-3.5 mr-1" />

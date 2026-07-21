@@ -76,8 +76,12 @@ export default function Header({ isUserSignedIn, isClerkConfigured }: HeaderProp
           }`}
       >
         <div className="container mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-          <Link href="/" onClick={closeMenu} className="flex items-center space-x-2 shrink-0">
-            <AppLogo className="h-14 md:h-20 w-auto object-contain rounded-md shadow-sm" />
+          <Link href="/" onClick={closeMenu} className="flex items-center space-x-3 shrink-0 group">
+            <AppLogo className="h-14 md:h-20 w-auto object-contain rounded-md shadow-sm transition-transform group-hover:scale-105" />
+            <div className="flex flex-col">
+              <span className="font-extrabold text-lg md:text-2xl text-slate-800 dark:text-white leading-tight tracking-tight">XTRACITY</span>
+              <span className="text-[8px] md:text-xs font-bold text-[#E03B0D] dark:text-emerald-400 tracking-[0.1em] md:tracking-[0.2em] uppercase">The Executives Hostel</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

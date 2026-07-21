@@ -88,11 +88,27 @@ export default async function PublicLayout({
             </ul>
           </div>
         </div>
-        <div className="container mx-auto px-4 md:px-6 mt-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between">
-          <p>© {new Date().getFullYear()} Xtracity Hostel Ghana. All rights reserved.</p>
-          <div className="flex items-center space-x-1 mt-2 sm:mt-0 text-slate-500">
-            <VerifiedIcon />
-            <span>Xtracity Verified Applications</span>
+        <div className="container mx-auto px-4 md:px-6 mt-8 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+          <p className="text-xs text-slate-500 mt-2">© {new Date().getFullYear()} Xtracity Hostel Ghana. All rights reserved.</p>
+          
+          <div className="flex flex-col items-center sm:items-end space-y-4">
+            <div className="flex items-center space-x-1 text-xs text-slate-500">
+              <VerifiedIcon />
+              <span>Xtracity Verified Applications</span>
+            </div>
+
+            {/* Designer Credits */}
+            <div className="flex flex-col sm:flex-row items-center sm:justify-end gap-1.5 sm:gap-2 text-[10px] text-slate-500/80">
+              <span>Designed by <span className="font-semibold text-slate-400">Michaelson</span></span>
+              <span className="hidden sm:inline text-slate-700">•</span>
+              <a href="tel:0592566487" className="hover:text-emerald-400 transition-colors">
+                0592566487
+              </a>
+              <span className="hidden sm:inline text-slate-700">•</span>
+              <a href="mailto:michaeldmwintuma@gmail.com" className="hover:text-emerald-400 transition-colors">
+                michaeldmwintuma@gmail.com
+              </a>
+            </div>
           </div>
         </div>
       </footer>

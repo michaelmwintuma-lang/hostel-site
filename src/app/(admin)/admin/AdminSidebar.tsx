@@ -30,13 +30,17 @@ export default function AdminSidebar({ userFirstName, userLastName }: { userFirs
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
             <AppLogo
               alt="Xtracity Admin Logo"
               width={120}
               height={32}
               className="h-8 w-auto object-contain rounded-md"
             />
+            <div className="flex flex-col">
+              <span className="font-extrabold text-sm text-slate-800 leading-tight">XTRACITY</span>
+              <span className="text-[8px] font-bold text-[#E03B0D] uppercase tracking-wider">Executives</span>
+            </div>
           </Link>
         </div>
         <div className="flex items-center">
@@ -52,13 +56,17 @@ export default function AdminSidebar({ userFirstName, userLastName }: { userFirs
         md:flex md:flex-col md:flex-1
       `}>
         {/* Desktop Logo */}
-        <Link href="/" className="hidden md:flex items-center space-x-2 px-6 pt-5 pb-2 border-b border-slate-100">
+        <Link href="/" className="hidden md:flex items-center space-x-3 px-6 pt-5 pb-2 border-b border-slate-100">
           <AppLogo
             alt="Xtracity Admin Logo"
             width={120}
             height={32}
             className="h-8 w-auto object-contain rounded-md shadow-sm"
           />
+          <div className="flex flex-col">
+            <span className="font-extrabold text-sm text-slate-800 leading-tight">XTRACITY</span>
+            <span className="text-[8px] font-bold text-[#E03B0D] tracking-widest uppercase">Executives</span>
+          </div>
         </Link>
 
         {/* Links */}
