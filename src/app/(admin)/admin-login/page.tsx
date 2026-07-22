@@ -13,7 +13,7 @@ export default function AdminLoginPage() {
     if (isLoaded && user) {
       const role = (user.publicMetadata as any)?.role;
       const email = user.emailAddresses?.[0]?.emailAddress;
-      if (role === 'admin' || email === 'xtracityhostels@gmail.com') {
+      if (role === 'admin' || email?.toLowerCase() === 'xtracityhostels@gmail.com') {
         router.replace('/admin');
       }
     }
@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
   if (isLoaded && user) {
     const role = (user.publicMetadata as any)?.role;
     const email = user.emailAddresses?.[0]?.emailAddress;
-    if (role === 'admin' || email === 'xtracityhostels@gmail.com') {
+    if (role === 'admin' || email?.toLowerCase() === 'xtracityhostels@gmail.com') {
       return (
         <div className="min-h-screen bg-gradient-to-br from-[#061A10] via-[#0D3D22] to-[#0a2d1a] flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
     }
 
     // User is signed in but not admin
-    if (role !== 'admin' && email !== 'xtracityhostels@gmail.com') {
+    if (role !== 'admin' && email?.toLowerCase() !== 'xtracityhostels@gmail.com') {
       return (
         <div className="min-h-screen bg-gradient-to-br from-[#061A10] via-[#0D3D22] to-[#0a2d1a] flex items-center justify-center p-4 relative overflow-hidden">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">

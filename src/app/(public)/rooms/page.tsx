@@ -21,8 +21,8 @@ const DEFAULT_ROOM_TYPES: RoomType[] = [
   {
     id: "single-room",
     name: "Single Room",
-    price_per_sem: 125000,
-    price: 125000,
+    price_per_sem: 19000,
+    price: 19000,
     capacity: 1,
     amenities: [
       "Private Study Desk",
@@ -38,8 +38,8 @@ const DEFAULT_ROOM_TYPES: RoomType[] = [
   {
     id: "two-in-a-room",
     name: "2-in-a-room",
-    price_per_sem: 80000,
-    price: 80000,
+    price_per_sem: 10000,
+    price: 10000,
     capacity: 2,
     amenities: [
       "Study Desks",
@@ -55,8 +55,8 @@ const DEFAULT_ROOM_TYPES: RoomType[] = [
   {
     id: "three-in-a-room",
     name: "3-in-a-room",
-    price_per_sem: 4800,
-    price: 4800,
+    price_per_sem: 10000,
+    price: 10000,
     capacity: 3,
     amenities: [
       "Wardrobes",

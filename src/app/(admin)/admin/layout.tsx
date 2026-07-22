@@ -46,7 +46,7 @@ export default async function AdminLayout({
   // Signed in but not admin → show access denied
   const userRole = user?.publicMetadata?.role || '';
   const userEmail = user?.emailAddresses?.[0]?.emailAddress || '';
-  const isAdmin = userRole === 'admin' || userEmail === 'xtracityhostels@gmail.com';
+  const isAdmin = userRole === 'admin' || userEmail.toLowerCase() === 'xtracityhostels@gmail.com';
 
   if (!isAdmin) {
     return (
@@ -78,7 +78,7 @@ export default async function AdminLayout({
   let firstName = user?.firstName;
   let lastName = user?.lastName;
 
-  if (userEmail === 'xtracityhostels@gmail.com') {
+  if (userEmail.toLowerCase() === 'xtracityhostels@gmail.com') {
     firstName = 'Mr. Bismark';
     lastName = 'Ofosu';
   }

@@ -71,7 +71,7 @@ VALUES
   (
     'two-in-a-room', 
     '2-in-a-room', 
-    80000, 
+    10000, 
     2, 
     ARRAY['Study Desks', 'Air Conditioning', 'Shared Bathroom', 'High-speed Internet', 'Spacious Wardrobe', 'Common Lounge Access'], 
     FALSE, 
@@ -80,7 +80,7 @@ VALUES
   (
     'three-in-a-room', 
     '3-in-a-room', 
-    4800, 
+    10000, 
     3, 
     ARRAY['Wardrobes', 'Air Conditioning', 'Shared Bathroom', 'Power Outlets', 'Study Area Access', 'Secure Building Entry'], 
     FALSE, 

@@ -29,8 +29,8 @@ interface Room {
 
 const DEFAULT_ROOM_TYPES: RoomType[] = [
   { id: "single-room", name: "Single Room", price_per_sem: 125000, capacity: 1 },
-  { id: "two-in-a-room", name: "2-in-a-room", price_per_sem: 80000, capacity: 2 },
-  { id: "three-in-a-room", name: "3-in-a-room", price_per_sem: 4800, capacity: 3 }
+  { id: "two-in-a-room", name: "2-in-a-room", price_per_sem: 10000, capacity: 2 },
+  { id: "three-in-a-room", name: "3-in-a-room", price_per_sem: 10000, capacity: 3 }
 ];
 
 const DEFAULT_ROOMS: Room[] = [
