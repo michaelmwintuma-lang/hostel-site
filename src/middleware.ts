@@ -1,16 +1,6 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-// Inline the check here to avoid importing server-only modules into the Edge runtime
-const isClerkConfigured =
-  process.env.CLERK_SECRET_KEY &&
-  process.env.CLERK_SECRET_KEY !== 'sk_test_Y2xlcmtfc2VjcmV0';
-
-export default isClerkConfigured
-  ? clerkMiddleware()
-  : (req: any) => {
-      // Offline mode: bypass authentication checks
-      return;
-    };
+export default clerkMiddleware();
 
 export const config = {
   matcher: [

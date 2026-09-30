@@ -3,7 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
-export default function ThemeToggle() {
+interface ThemeToggleProps {
+  className?: string;
+  showLabel?: boolean;
+}
+
+export default function ThemeToggle({ className = '', showLabel = false }: ThemeToggleProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -27,14 +32,24 @@ export default function ThemeToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all cursor-pointer flex items-center justify-center"
-      aria-label="Toggle dark mode"
+      className={`inline-flex items-center justify-center shrink-0 border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 rounded-lg cursor-pointer shadow-sm ${
+        showLabel ? 'gap-2 px-3 py-1.5 text-xs font-semibold' : 'h-8 w-8 p-1.5'
+      } ${className}`}
+      aria-label="Toggle theme"
+      title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
     >
       {theme === 'dark' ? (
-        <Sun className="h-5 w-5 text-amber-500 animate-pulse" />
+        <>
+          <Sun className="h-4 w-4 text-zinc-200 shrink-0" />
+          {showLabel && <span>Light</span>}
+        </>
       ) : (
-        <Moon className="h-5 w-5 text-slate-600" />
+        <>
+          <Moon className="h-4 w-4 text-slate-700 shrink-0" />
+          {showLabel && <span>Dark</span>}
+        </>
       )}
     </button>
   );

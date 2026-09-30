@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { Users, Search, Edit2, FileText, CheckCircle, XCircle, UserPlus, Trash, Plus } from 'lucide-react';
+import { Users, Search, Edit2, CheckCircle, FileText, UserPlus, Trash } from 'lucide-react';
 
 interface StudentResident {
   id: string;
@@ -24,7 +24,6 @@ interface StudentResident {
     academic_year: string;
     semester: number;
     status: string;
-    balance_due?: number;
     rooms: {
       room_number: string;
     };
@@ -35,7 +34,6 @@ export default function ResidentsDirectoryPage() {
   const [loading, setLoading] = useState(true);
   const [residents, setResidents] = useState<StudentResident[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showOutstandingOnly, setShowOutstandingOnly] = useState(false);
   
   // Dialog state for Editing
   const [selectedResident, setSelectedResident] = useState<StudentResident | null>(null);
@@ -117,7 +115,7 @@ export default function ResidentsDirectoryPage() {
 
     try {
       // 1. Update Student Disciplinary Notes in Supabase
-      const { error: studentUpdateError } = await supabase
+      await supabase
         .from('students')
         .update({
           disciplinary_notes: editNotes
@@ -184,7 +182,6 @@ export default function ResidentsDirectoryPage() {
     };
 
     try {
-      // Try DB insert with a placeholder clerk_id for manual registrations
       const manualClerkId = `manual_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
       
       const { data: stdData, error: stdError } = await supabase
@@ -203,7 +200,6 @@ export default function ResidentsDirectoryPage() {
         .single();
 
       if (!stdError && stdData) {
-        // Find matching room in DB
         const { data: roomData } = await supabase
           .from('rooms')
           .select('id')
@@ -217,8 +213,7 @@ export default function ResidentsDirectoryPage() {
             academic_year: '2026/2027',
             semester: 1,
             price: 7500,
-            status: 'Confirmed',
-            balance_due: 7500
+            status: 'Confirmed'
           });
         }
       }
@@ -226,10 +221,8 @@ export default function ResidentsDirectoryPage() {
       console.error('Database registration error, proceeding with state only:', err);
     }
 
-    // Always update local state for preview demo
     setResidents(prev => [newStudentObj, ...prev]);
     setIsRegisterDialogOpen(false);
-    // Reset Form
     setNewResident({
       first_name: '',
       last_name: '',
@@ -242,14 +235,12 @@ export default function ResidentsDirectoryPage() {
     });
   };
 
-  // Delete Resident
   const handleDeleteResident = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this student resident profile and all their room bookings?")) {
       return;
     }
 
     try {
-      // Delete bookings first due to foreign key constraints
       const residentToDelete = residents.find(r => r.id === id);
       const bookingId = residentToDelete?.bookings?.[0]?.id;
       if (bookingId && !bookingId.startsWith('b_')) {
@@ -262,118 +253,105 @@ export default function ResidentsDirectoryPage() {
       console.error('DB delete error, removing from local state:', err);
     }
 
-    // Always remove from local state
     setResidents(prev => prev.filter(r => r.id !== id));
   };
 
-  // Filter residents list by search term
   const filteredResidents = residents.filter(r => {
     const fullName = `${r.first_name} ${r.last_name}`.toLowerCase();
     const email = r.email.toLowerCase();
     const query = searchTerm.toLowerCase();
-    const matchesSearch = fullName.includes(query) || email.includes(query) || r.student_id_num.toLowerCase().includes(query);
-    
-    if (showOutstandingOnly) {
-      const balance = r.bookings?.[0]?.balance_due || 0;
-      return matchesSearch && balance > 0;
-    }
-    return matchesSearch;
+    return fullName.includes(query) || email.includes(query) || r.student_id_num.toLowerCase().includes(query);
   });
 
   return (
-    <div className="space-y-8 bg-slate-50 text-slate-800">
-      
+    <div className="space-y-8 bg-transparent text-slate-900 dark:text-zinc-100">
       {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-zinc-800">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 flex items-center space-x-2">
-            <Users className="h-6 w-6 text-[#E03B0D]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-zinc-100 flex items-center space-x-2">
+            <Users className="h-5 w-5 text-slate-700 dark:text-zinc-300" />
             <span>Resident Management</span>
           </h1>
-          <p className="text-slate-500 text-xs mt-1">
-            Search, view, register and manage student records and room placements.
+          <p className="text-slate-500 dark:text-zinc-400 text-xs mt-0.5">
+            Search, view, register, and manage student records and room placements.
           </p>
         </div>
 
         {/* Register Button */}
         <Button
           onClick={() => setIsRegisterDialogOpen(true)}
-          className="bg-[#E03B0D] text-white font-semibold text-xs rounded-full px-5 py-2.5 hover:bg-[#A12808] flex items-center space-x-2 cursor-pointer shadow-sm"
+          className="bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold text-xs rounded-xl px-4 py-2 flex items-center space-x-1.5 cursor-pointer shadow-sm w-full sm:w-auto justify-center"
         >
-          <UserPlus className="h-4 w-4" />
+          <UserPlus className="h-3.5 w-3.5" />
           <span>Register Student</span>
         </Button>
       </div>
 
-      {/* Directory Count Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-slate-200 bg-white p-5 shadow-sm flex items-center space-x-4">
-          <div className="p-3.5 bg-[#E03B0D]/10 rounded-xl text-[#E03B0D]">
-            <Users className="h-6 w-6" />
+      {/* Directory Count Info Cards — Compact & Sizable for Mobile & Desktop */}
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+        <div className="border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-2.5 sm:p-4 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left">
+          <div className="p-1.5 sm:p-2 bg-slate-100 dark:bg-zinc-800 rounded-lg text-slate-700 dark:text-zinc-300 w-fit mx-auto sm:mx-0">
+            <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </div>
-          <div>
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Total Registered</span>
-            <span className="text-2xl font-black text-slate-900">{residents.length} Student(s)</span>
-          </div>
-        </Card>
-        
-        <Card className="border-slate-200 bg-white p-5 shadow-sm flex items-center space-x-4">
-          <div className="p-3.5 bg-emerald-500/10 rounded-xl text-emerald-600">
-            <CheckCircle className="h-6 w-6" />
-          </div>
-          <div>
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Active Rooms Placed</span>
-            <span className="text-2xl font-black text-slate-900">
-              {residents.filter(r => r.bookings?.[0]?.status === 'Confirmed').length} Resident(s)
+          <div className="min-w-0">
+            <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-zinc-400 uppercase tracking-wider font-semibold block truncate">
+              Registered
+            </span>
+            <span className="text-sm sm:text-xl font-bold text-slate-900 dark:text-zinc-100 block">
+              {residents.length}
             </span>
           </div>
-        </Card>
+        </div>
 
-        <Card className="border-slate-200 bg-white p-5 shadow-sm flex items-center space-x-4">
-          <div className="p-3.5 bg-amber-500/10 rounded-xl text-amber-600">
-            <FileText className="h-6 w-6" />
+        <div className="border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-2.5 sm:p-4 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left">
+          <div className="p-1.5 sm:p-2 bg-slate-100 dark:bg-zinc-800 rounded-lg text-slate-700 dark:text-zinc-300 w-fit mx-auto sm:mx-0">
+            <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </div>
-          <div>
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block">Pending Inquiries</span>
-            <span className="text-2xl font-black text-slate-900">
-              {residents.filter(r => r.bookings?.[0]?.status === 'Pending').length} Pending
+          <div className="min-w-0">
+            <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-zinc-400 uppercase tracking-wider font-semibold block truncate">
+              Placed
+            </span>
+            <span className="text-sm sm:text-xl font-bold text-slate-900 dark:text-zinc-100 block">
+              {residents.filter(r => r.bookings?.[0]?.status === 'Confirmed').length}
             </span>
           </div>
-        </Card>
+        </div>
+
+        <div className="border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-2.5 sm:p-4 rounded-xl shadow-sm flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left">
+          <div className="p-1.5 sm:p-2 bg-slate-100 dark:bg-zinc-800 rounded-lg text-slate-700 dark:text-zinc-300 w-fit mx-auto sm:mx-0">
+            <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          </div>
+          <div className="min-w-0">
+            <span className="text-[9px] sm:text-[10px] text-slate-500 dark:text-zinc-400 uppercase tracking-wider font-semibold block truncate">
+              Pending
+            </span>
+            <span className="text-sm sm:text-xl font-bold text-slate-900 dark:text-zinc-100 block">
+              {residents.filter(r => r.bookings?.[0]?.status === 'Pending').length}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Control bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:max-w-md">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400 dark:text-zinc-500" />
           <Input
             placeholder="Search by student name, ID, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-white border-slate-200 text-slate-800 text-xs w-full rounded-xl"
+            className="pl-9 pr-3 py-2 bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 text-xs w-full rounded-xl shadow-sm"
           />
-        </div>
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="outstandingToggle"
-            checked={showOutstandingOnly}
-            onChange={(e) => setShowOutstandingOnly(e.target.checked)}
-            className="h-4 w-4 rounded border-slate-300 text-[#E03B0D] focus:ring-[#E03B0D]"
-          />
-          <Label htmlFor="outstandingToggle" className="text-xs font-semibold text-slate-600 cursor-pointer">
-            Show Outstanding Balances Only
-          </Label>
         </div>
       </div>
 
       {/* Table grid */}
-      <Card className="border-slate-200 bg-white text-slate-800 shadow-sm">
+      <Card className="border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-900 dark:text-zinc-100 shadow-sm rounded-2xl overflow-hidden">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-100 text-slate-500 uppercase tracking-widest font-semibold text-[10px]">
+                <tr className="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 uppercase tracking-widest font-semibold text-[10px]">
                   <th className="px-6 py-4">Student Info</th>
                   <th className="px-6 py-4">ID / University</th>
                   <th className="px-6 py-4">Assigned Room</th>
@@ -382,12 +360,12 @@ export default function ResidentsDirectoryPage() {
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
                 {loading ? (
                   <tr className="h-14 animate-pulse"><td colSpan={6}></td></tr>
                 ) : filteredResidents.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-8 text-center text-slate-400 text-xs">
+                    <td colSpan={6} className="px-6 py-8 text-center text-slate-400 dark:text-zinc-500 text-xs">
                       No matching student residents found.
                     </td>
                   </tr>
@@ -395,44 +373,44 @@ export default function ResidentsDirectoryPage() {
                   filteredResidents.map((resident) => {
                     const activeBooking = resident.bookings?.[0];
                     return (
-                      <tr key={resident.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={resident.id} className="bg-white dark:bg-zinc-900">
                         <td className="px-6 py-4">
-                          <div className="font-bold text-slate-900">
+                          <div className="font-bold text-slate-900 dark:text-zinc-100">
                             {resident.first_name} {resident.last_name}
                           </div>
-                          <div className="text-[10px] text-slate-500">{resident.email}</div>
-                          <div className="text-[10px] text-slate-500">{resident.phone_number}</div>
+                          <div className="text-[10px] text-slate-500 dark:text-zinc-400">{resident.email}</div>
+                          <div className="text-[10px] text-slate-500 dark:text-zinc-400">{resident.phone_number}</div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="font-medium text-slate-700">{resident.student_id_num}</div>
-                          <div className="text-[10px] text-slate-500">{resident.university}</div>
+                          <div className="font-medium text-slate-700 dark:text-zinc-300">{resident.student_id_num}</div>
+                          <div className="text-[10px] text-slate-500 dark:text-zinc-400">{resident.university}</div>
                         </td>
-                        <td className="px-6 py-4 font-semibold text-slate-700">
+                        <td className="px-6 py-4 font-semibold text-slate-700 dark:text-zinc-300">
                           {activeBooking?.rooms?.room_number || (
-                            <span className="text-slate-400 italic text-[10px]">Unassigned</span>
+                            <span className="text-slate-400 dark:text-zinc-500 italic text-[10px]">Unassigned</span>
                           )}
                         </td>
                         <td className="px-6 py-4">
                           <Badge
-                            className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${
+                            className={`rounded-md px-2 py-0.5 text-[9px] font-semibold border ${
                               activeBooking?.status === 'Confirmed'
-                                ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                                ? 'bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 border-transparent'
                                 : activeBooking?.status === 'Pending'
-                                ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20'
-                                : 'bg-red-500/10 text-red-600 border border-red-500/20'
+                                ? 'bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 border-slate-300 dark:border-zinc-700'
+                                : 'bg-transparent text-slate-400 dark:text-zinc-500 border-slate-200 dark:border-zinc-700'
                             }`}
                           >
                             {activeBooking?.status || 'No Booking'}
                           </Badge>
                         </td>
-                        <td className="px-6 py-4 max-w-[200px] truncate text-slate-500 text-[10px]">
+                        <td className="px-6 py-4 max-w-[200px] truncate text-slate-500 dark:text-zinc-400 text-[10px]">
                           {resident.disciplinary_notes || 'None'}
                         </td>
                         <td className="px-6 py-4 text-right flex items-center justify-end space-x-1.5 h-14">
                           <Button
                             variant="ghost"
                             onClick={() => openEditDialog(resident)}
-                            className="text-[#E03B0D] hover:bg-[#E03B0D]/10 rounded-lg p-2 h-auto cursor-pointer"
+                            className="text-slate-700 dark:text-zinc-300 rounded-lg p-2 h-auto cursor-pointer border border-slate-200 dark:border-zinc-700"
                             title="Edit Student Files"
                           >
                             <Edit2 className="h-4 w-4" />
@@ -440,7 +418,7 @@ export default function ResidentsDirectoryPage() {
                           <Button
                             variant="ghost"
                             onClick={() => handleDeleteResident(resident.id)}
-                            className="text-red-500 hover:bg-red-50 rounded-lg p-2 h-auto cursor-pointer"
+                            className="text-slate-500 dark:text-zinc-400 rounded-lg p-2 h-auto cursor-pointer border border-slate-200 dark:border-zinc-700"
                             title="Delete Student"
                           >
                             <Trash className="h-4 w-4" />
@@ -456,99 +434,99 @@ export default function ResidentsDirectoryPage() {
         </CardContent>
       </Card>
 
-      {/* Register Resident Dialog Modal */}
+      {/* Register New Resident Dialog */}
       <Dialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen}>
-        <DialogContent className="bg-white border-slate-200 text-slate-800 max-w-md rounded-2xl">
+        <DialogContent className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 max-w-md rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold text-slate-900 flex items-center space-x-2">
-              <UserPlus className="h-5 w-5 text-[#E03B0D]" />
+            <DialogTitle className="text-base font-bold flex items-center space-x-2 text-slate-900 dark:text-zinc-100">
+              <UserPlus className="h-5 w-5 text-slate-700 dark:text-zinc-300" />
               <span>Register New Student Resident</span>
             </DialogTitle>
-            <DialogDescription className="text-slate-500 text-xs">
-              Manually register a student profile and assign them a room placement.
+            <DialogDescription className="text-slate-500 dark:text-zinc-400 text-xs">
+              Directly input an authenticated student record and allocate hostel rooms.
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleRegisterResident} className="space-y-4 py-4 text-xs">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="regFirstName" className="text-slate-600 font-semibold">First Name</Label>
+          <form onSubmit={handleRegisterResident} className="space-y-3.5 py-3 text-xs">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="fname" className="text-slate-700 dark:text-zinc-300 font-semibold">First Name</Label>
                 <Input
-                  id="regFirstName"
+                  id="fname"
                   required
                   value={newResident.first_name}
                   onChange={(e) => setNewResident(prev => ({ ...prev, first_name: e.target.value }))}
-                  className="bg-slate-50 border-slate-200 text-slate-800"
-                  placeholder="Kofi"
+                  className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
+                  placeholder="E.g. Michael"
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="regLastName" className="text-slate-600 font-semibold">Last Name</Label>
+              <div className="space-y-1">
+                <Label htmlFor="lname" className="text-slate-700 dark:text-zinc-300 font-semibold">Last Name</Label>
                 <Input
-                  id="regLastName"
+                  id="lname"
                   required
                   value={newResident.last_name}
                   onChange={(e) => setNewResident(prev => ({ ...prev, last_name: e.target.value }))}
-                  className="bg-slate-50 border-slate-200 text-slate-800"
-                  placeholder="Mensah"
+                  className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
+                  placeholder="E.g. Mensah"
                 />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="regEmail" className="text-slate-600 font-semibold">Email Address</Label>
+            <div className="space-y-1">
+              <Label htmlFor="email" className="text-slate-700 dark:text-zinc-300 font-semibold">Institutional Email</Label>
               <Input
-                id="regEmail"
+                id="email"
                 type="email"
                 required
                 value={newResident.email}
                 onChange={(e) => setNewResident(prev => ({ ...prev, email: e.target.value }))}
-                className="bg-slate-50 border-slate-200 text-slate-800"
-                placeholder="kofimensah@gmail.com"
+                className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
+                placeholder="michael@university.edu.gh"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="regPhone" className="text-slate-600 font-semibold">Phone Contact</Label>
+            <div className="space-y-1">
+              <Label htmlFor="phone" className="text-slate-700 dark:text-zinc-300 font-semibold">Phone Contact Number</Label>
               <Input
-                id="regPhone"
+                id="phone"
                 value={newResident.phone_number}
                 onChange={(e) => setNewResident(prev => ({ ...prev, phone_number: e.target.value }))}
-                className="bg-slate-50 border-slate-200 text-slate-800"
-                placeholder="E.g. +233 50 111 2222"
+                className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
+                placeholder="+233 50 123 4567"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="regUniv" className="text-slate-600 font-semibold">University</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="uni" className="text-slate-700 dark:text-zinc-300 font-semibold">University</Label>
                 <Input
-                  id="regUniv"
+                  id="uni"
                   value={newResident.university}
                   onChange={(e) => setNewResident(prev => ({ ...prev, university: e.target.value }))}
-                  className="bg-slate-50 border-slate-200 text-slate-800"
-                  placeholder="E.g. University of Ghana"
+                  className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
+                  placeholder="Academic City"
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="regID" className="text-slate-600 font-semibold">Student ID Num</Label>
+              <div className="space-y-1">
+                <Label htmlFor="studId" className="text-slate-700 dark:text-zinc-300 font-semibold">Student ID Num</Label>
                 <Input
-                  id="regID"
+                  id="studId"
                   value={newResident.student_id_num}
                   onChange={(e) => setNewResident(prev => ({ ...prev, student_id_num: e.target.value }))}
-                  className="bg-slate-50 border-slate-200 text-slate-800"
+                  className="bg-slate-50 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-900 dark:text-zinc-100 rounded-xl"
                   placeholder="E.g. 10924823"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="regRoom" className="text-slate-600 font-semibold">Assign Room Placement</Label>
+              <Label htmlFor="regRoom" className="text-slate-700 dark:text-zinc-300 font-semibold">Assign Room Placement</Label>
               <select
                 id="regRoom"
                 value={newResident.room_number}
                 onChange={(e) => setNewResident(prev => ({ ...prev, room_number: e.target.value }))}
-                className="w-full bg-slate-50 border border-slate-200 rounded-md p-2.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#E03B0D]"
+                className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-slate-900 dark:text-zinc-100 focus:outline-none"
               >
                 <option value="Room 101-A">Room 101-A (Single Room)</option>
                 <option value="Room 102-A">Room 102-A (Single Room)</option>
@@ -559,29 +537,29 @@ export default function ResidentsDirectoryPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="regNotes" className="text-slate-600 font-semibold">Initial Conduct/Disciplinary Notes</Label>
+              <Label htmlFor="regNotes" className="text-slate-700 dark:text-zinc-300 font-semibold">Initial Conduct/Disciplinary Notes</Label>
               <textarea
                 id="regNotes"
                 value={newResident.disciplinary_notes}
                 onChange={(e) => setNewResident(prev => ({ ...prev, disciplinary_notes: e.target.value }))}
-                className="w-full bg-slate-50 border border-slate-200 rounded-md p-2.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#E03B0D]"
+                className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-slate-900 dark:text-zinc-100 focus:outline-none"
                 rows={2}
                 placeholder="Disciplinary notes..."
               />
             </div>
 
-            <DialogFooter className="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <DialogFooter className="pt-4 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsRegisterDialogOpen(false)}
-                className="border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold rounded-full px-5 py-2"
+                className="border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold rounded-xl px-5 py-2"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="bg-[#E03B0D] text-white font-semibold rounded-full px-6 py-2 hover:bg-[#A12808] cursor-pointer"
+                className="bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold rounded-xl px-6 py-2 cursor-pointer shadow-sm"
               >
                 Create Resident
               </Button>
@@ -592,12 +570,12 @@ export default function ResidentsDirectoryPage() {
 
       {/* Edit Resident Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="bg-white border-slate-200 text-slate-800 max-w-sm rounded-2xl">
+        <DialogContent className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 max-w-sm rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold flex items-center space-x-2 text-slate-900">
+            <DialogTitle className="text-base font-bold flex items-center space-x-2 text-slate-900 dark:text-zinc-100">
               <span>Manage Student File</span>
             </DialogTitle>
-            <DialogDescription className="text-slate-500 text-xs">
+            <DialogDescription className="text-slate-500 dark:text-zinc-400 text-xs">
               Update check-in booking status or edit student conduct records.
             </DialogDescription>
           </DialogHeader>
@@ -605,19 +583,19 @@ export default function ResidentsDirectoryPage() {
           {selectedResident && (
             <div className="space-y-4 py-4 text-xs">
               <div className="space-y-1.5">
-                <span className="text-slate-500 block">Student Resident:</span>
-                <span className="font-bold text-slate-900 text-sm">
+                <span className="text-slate-500 dark:text-zinc-400 block">Student Resident:</span>
+                <span className="font-bold text-slate-900 dark:text-zinc-100 text-sm">
                   {selectedResident.first_name} {selectedResident.last_name}
                 </span>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="editStatus" className="text-slate-600 font-semibold">Booking & Check-in Status</Label>
+                <Label htmlFor="editStatus" className="text-slate-700 dark:text-zinc-300 font-semibold">Booking & Check-in Status</Label>
                 <select
                   id="editStatus"
                   value={editStatus}
                   onChange={(e) => setEditStatus(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-md p-2.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#E03B0D]"
+                  className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-slate-900 dark:text-zinc-100 focus:outline-none"
                 >
                   <option value="Pending">Pending Validation</option>
                   <option value="Confirmed">Confirmed / Checked-In</option>
@@ -626,30 +604,30 @@ export default function ResidentsDirectoryPage() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="editNotes" className="text-slate-600 font-semibold">Conduct & Disciplinary Notes</Label>
+                <Label htmlFor="editNotes" className="text-slate-700 dark:text-zinc-300 font-semibold">Conduct & Disciplinary Notes</Label>
                 <textarea
                   id="editNotes"
                   value={editNotes}
                   onChange={(e) => setEditNotes(e.target.value)}
                   rows={4}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-md p-2.5 text-slate-800 text-xs focus:outline-none focus:ring-1 focus:ring-[#E03B0D]"
+                  className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-slate-900 dark:text-zinc-100 text-xs focus:outline-none"
                   placeholder="Record curfew violations, roommates reports, or warning notes..."
                 />
               </div>
             </div>
           )}
 
-          <DialogFooter className="flex items-center justify-between pt-4 border-t border-slate-100">
+          <DialogFooter className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-zinc-800">
             <Button
               variant="outline"
               onClick={() => setIsEditDialogOpen(false)}
-              className="border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-xs rounded-full px-5 py-2"
+              className="border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs rounded-xl px-5 py-2"
             >
               Cancel
             </Button>
             <Button
               onClick={handleSaveChanges}
-              className="bg-[#E03B0D] text-white font-semibold text-xs rounded-full px-5 py-2 hover:bg-[#A12808] cursor-pointer"
+              className="bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold text-xs rounded-xl px-5 py-2 cursor-pointer shadow-sm"
             >
               Save Changes
             </Button>
